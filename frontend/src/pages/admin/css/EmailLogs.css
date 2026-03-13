@@ -1,0 +1,46 @@
+.email-logs-container {
+  padding: var(--spacing-lg);
+  background: var(--surface-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.log-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing-md);
+}
+
+.log-table th {
+  background-color: var(--background-color);
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-align: left;
+  padding: var(--spacing-md);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.log-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  vertical-align: top;
+}
+
+.log-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-sent {
+  background-color: #d1fae5;
+  color: var(--secondary-color);
+}
+
+.status-failed {
+  background-color: #fee2e2;
+  color: var(--danger-color);
+}

@@ -1,0 +1,79 @@
+.auth-page-bg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* Specific gradient is set per page inline or with utility classes */
+}
+
+/* The Welcome Back layout - job themed background image (set via inline style in JSX) */
+.bg-gradient-login {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.auth-card-modern {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2.25rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--glass-shadow);
+  animation: slideUp var(--transition-normal) ease-out forwards;
+  z-index: 10;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Internal glass highlight effect */
+.auth-card-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass-border-light), transparent);
+}
+
+.auth-header-modern {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-header-modern h1 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.auth-header-modern p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.form-group-modern {
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.forgot-password-link {
+  float: right;
+  font-size: 0.875rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+}

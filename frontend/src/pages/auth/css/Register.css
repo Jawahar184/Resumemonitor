@@ -1,0 +1,11 @@
+@import "./Login.css";
+
+/* Register specific tweaks if needed */
+.auth-split-row {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.auth-split-row > * {
+  flex: 1;
+}

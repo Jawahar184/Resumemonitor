@@ -1,0 +1,72 @@
+.job-alerts-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.alert-card {
+  background: var(--surface-color);
+  border-left: 4px solid var(--primary-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert-info h3 {
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+.alert-info p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.alert-toggle {
+  /* Toggle switch styling */
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.alert-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--border-color);
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
