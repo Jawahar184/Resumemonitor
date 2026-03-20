@@ -12,7 +12,7 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/auth/register", {
+      await API.post("/auth/register", {
         name,
         email,
         password,
@@ -25,7 +25,11 @@ function Register() {
       alert("Registration Successful. Please Sign In.");
       navigate("/");
     } catch (err) {
-      alert("Registration Failed.");
+      if (err.response && err.response.data && err.response.data.detail) {
+        alert("Registration Failed: " + err.response.data.detail);
+      } else {
+        alert("Registration Failed.");
+      }
     }
   };
 
@@ -51,7 +55,7 @@ function Register() {
 
         <div className="auth-header-modern">
           <h1 style={{ color: 'var(--text-primary)' }}>Create Account ✨</h1>
-          <p>Register as a new user 📝</p>
+          <p>Register as a new candidate 📝</p>
         </div>
 
         <form onSubmit={handleRegister}>
@@ -96,16 +100,15 @@ function Register() {
 
         <div className="auth-footer-text">
           Already have an account? <Link to="/" className="auth-footer-link" style={{ color: 'var(--secondary-color)' }}>Sign In</Link>
-          <div style={{ marginTop: '1rem', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '1px' }}>
+          <div style={{ marginTop: '1rem', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '1px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <Link to="/company-secret" style={{ color: '#94a3b8', textDecoration: 'none' }}>
+              🏢 SECURE COMPANY REGISTRATION
+            </Link>
             <Link to="/admin-secret" style={{ color: '#94a3b8', textDecoration: 'none' }}>
               🛡️ SECURE ADMIN REGISTRATION
             </Link>
           </div>
         </div>
-      </div>
-
-      <div className="auth-copyright" style={{ color: '#64748b' }}>
-        © 2024 SecurePortal Pro • Multi-layered Protection
       </div>
     </div>
   );

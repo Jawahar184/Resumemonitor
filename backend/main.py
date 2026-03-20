@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from auth import login, register
-from admin import post_job, admin_data
+from company import post_job, company_data
+from admin import admin_dashboard
 from user import upload_resume, user_data
 
 app = FastAPI()
@@ -17,8 +18,10 @@ app.add_middleware(
 app.include_router(login.router, prefix="/auth")
 app.include_router(register.router, prefix="/auth")
 
-app.include_router(post_job.router, prefix="/admin")
-app.include_router(admin_data.router, prefix="/admin")
+app.include_router(post_job.router, prefix="/company")
+app.include_router(company_data.router, prefix="/company")
+
+app.include_router(admin_dashboard.router, prefix="/admin")
 
 app.include_router(upload_resume.router, prefix="/user")
 app.include_router(user_data.router, prefix="/user")

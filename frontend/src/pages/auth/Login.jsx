@@ -19,19 +19,26 @@ function Login() {
       
       const res = await API.post("/auth/login", {
         email,
-        password
+        password,
+        role
       });
 
       // Check if the backend confirmed success
       if (res.data && res.data.message === "Login success") {
          localStorage.setItem("user_name",  res.data.name  || "");
          localStorage.setItem("user_email", res.data.email || "");
-         localStorage.setItem("user_role",  res.data.role  || role);
-         if(role === "Admin") {
+         const actualRole = res.data.role || role;
+         localStorage.setItem("user_role", actualRole);
+         
+         if (actualRole === "Admin") {
            navigate("/admin/dashboard");
+         } else if (actualRole === "Company") {
+           navigate("/company/dashboard");
          } else {
            navigate("/user/dashboard");
          }
+      } else if (res.data && res.data.message === "Invalid role") {
+         alert(`Login Failed: This account is not registered as a ${role}.`);
       } else {
          alert("Login Failed: Incorrect email or password.");
       }
@@ -68,6 +75,7 @@ function Login() {
             >
               <option value="" disabled>Choose a role...</option>
               <option value="User">User</option>
+              <option value="Company">Company</option>
               <option value="Admin">Admin</option>
             </select>
           </div>

@@ -12,7 +12,7 @@ function AdminRegister() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.post("/auth/register", {
+      await API.post("/auth/register", {
         name,
         email,
         password,
@@ -25,7 +25,11 @@ function AdminRegister() {
       alert("Admin Registration Successful. Please Sign In.");
       navigate("/");
     } catch (err) {
-      alert("Registration Failed.");
+      if (err.response && err.response.data && err.response.data.detail) {
+        alert("Registration Failed: " + err.response.data.detail);
+      } else {
+        alert("Registration Failed.");
+      }
     }
   };
 
