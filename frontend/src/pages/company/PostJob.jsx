@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import API from "../../services/api";
 import "./css/AdminDashboard.css"; 
+import { useToast } from "../../context/ToastContext";
 
 function PostJob() {
+  const { toast } = useToast();
   const [jobTitle, setJobTitle] = useState("");
   const [skills, setSkills] = useState("");
   const [minCgpa, setMinCgpa] = useState("");
@@ -28,7 +30,7 @@ function PostJob() {
          setLastMatches(res.data.matches);
       }
       
-      alert(res.data.message || "Job posted successfully!");
+      toast.success(res.data.message || "Job posted successfully!");
       setJobTitle("");
       setSkills("");
       setMinCgpa("");
@@ -36,7 +38,7 @@ function PostJob() {
 
     } catch (error) {
       console.error(error);
-      alert("Failed to post job");
+      toast.error("Failed to post job");
     } finally {
       setIsPosting(false);
     }

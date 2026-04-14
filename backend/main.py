@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 
 from auth import login, register
@@ -25,3 +25,7 @@ app.include_router(admin_dashboard.router, prefix="/admin")
 
 app.include_router(upload_resume.router, prefix="/user")
 app.include_router(user_data.router, prefix="/user")
+
+@app.get('/favicon.ico', include_in_schema=False)
+async def favicon():
+    return Response(content=b"", media_type="image/x-icon")

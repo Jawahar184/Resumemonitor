@@ -2,12 +2,36 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../../services/api";
 import "./css/Login.css";
+import { useToast } from "../../context/ToastContext";
 
 function Register() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [sendingOtp, setSendingOtp] = useState(false);
+
+  const sendOtp = async () => {
+    if (!email) {
+      toast.error("Please enter an email first to receive OTP.");
+      return;
+    }
+    setSendingOtp(true);
+    try {
+      await API.post("/auth/send-otp", { email });
+      toast.success("OTP sent! Please check your inbox.");
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.detail) {
+        toast.error("Failed: " + err.response.data.detail);
+      } else {
+        toast.error("Failed to send OTP. Check backend configuration.");
+      }
+    } finally {
+      setSendingOtp(false);
+    }
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -16,19 +40,20 @@ function Register() {
         name,
         email,
         password,
-        role: "User"
+        role: "User",
+        otp
       });
 
       localStorage.setItem("user_name",  name);
       localStorage.setItem("user_email", email);
       localStorage.setItem("user_role",  "User");
-      alert("Registration Successful. Please Sign In.");
+      toast.success("Registration Successful. Please Sign In.");
       navigate("/");
     } catch (err) {
       if (err.response && err.response.data && err.response.data.detail) {
-        alert("Registration Failed: " + err.response.data.detail);
+        toast.error("Registration Failed: " + err.response.data.detail);
       } else {
-        alert("Registration Failed.");
+        toast.error("Registration Failed.");
       }
     }
   };
@@ -69,13 +94,34 @@ function Register() {
             />
           </div>
 
-          <div className="form-group-modern">
+          <div className="form-group-modern" style={{ display: 'flex', gap: '0.5rem' }}>
             <input
               className="form-input"
               placeholder="Email Address ✉️"
               type="email"
               required
               onChange={(e) => setEmail(e.target.value)}
+              style={{ flex: 1 }}
+            />
+            <button 
+              type="button" 
+              onClick={sendOtp} 
+              disabled={sendingOtp}
+              style={{ padding: '0 1rem', background: 'var(--primary-light)', color: 'var(--primary-color)', border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer' }}
+            >
+              {sendingOtp ? "..." : "Get OTP"}
+            </button>
+          </div>
+
+          <div className="form-group-modern">
+            <input
+              className="form-input"
+              placeholder="Enter 6-Digit OTP"
+              type="text"
+              required
+              maxLength={6}
+              onChange={(e) => setOtp(e.target.value)}
+              style={{ letterSpacing: '2px', textAlign: 'center', fontWeight: 'bold' }}
             />
           </div>
 

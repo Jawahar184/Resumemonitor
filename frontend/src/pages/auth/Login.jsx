@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import API from "../../services/api";
 import "./css/Login.css";
+import { useToast } from "../../context/ToastContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [role, setRole] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +15,7 @@ function Login() {
     e.preventDefault();
     try {
       if(!role) {
-        alert("Please choose a role");
+        toast.error("Please choose a role");
         return;
       }
       
@@ -38,13 +40,13 @@ function Login() {
            navigate("/user/dashboard");
          }
       } else if (res.data && res.data.message === "Invalid role") {
-         alert(`Login Failed: This account is not registered as a ${role}.`);
+         toast.error(`Login Failed: This account is not registered as a ${role}.`);
       } else {
-         alert("Login Failed: Incorrect email or password.");
+         toast.error("Login Failed: Incorrect email or password.");
       }
 
     } catch (err) {
-      alert("Login Failed: Incorrect email or password.");
+      toast.error("Login Failed: Incorrect email or password.");
     }
   };
 

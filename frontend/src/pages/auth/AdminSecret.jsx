@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/Login.css";
+import { useToast } from "../../context/ToastContext";
 
 function AdminSecret() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [secretKey, setSecretKey] = useState("");
 
   const handleVerify = (e) => {
@@ -11,7 +13,7 @@ function AdminSecret() {
     if(secretKey === "ADMIN123") {
       navigate("/admin-register");
     } else {
-      alert("Invalid Admin Secret Key");
+      toast.error("Invalid Admin Secret Key");
     }
   };
 

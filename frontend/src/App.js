@@ -23,41 +23,45 @@ import PostJob from "./pages/company/PostJob";
 
 import GlobalAdminDashboard from "./pages/admin/AdminDashboard";
 
+import { ToastProvider } from "./context/ToastContext";
+
 function App() {
   return (
     <div className="bg-mesh-app">
-      <BrowserRouter>
-        <Routes>
+      <ToastProvider>
+        <BrowserRouter>
+          <Routes>
 
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-        <Route path="/admin-secret" element={<AdminSecret />} />
-        <Route path="/admin-register" element={<AdminRegister />} />
-        <Route path="/company-secret" element={<CompanySecret />} />
-        <Route path="/company-register" element={<CompanyRegister />} />
+          <Route path="/admin-secret" element={<AdminSecret />} />
+          <Route path="/admin-register" element={<AdminRegister />} />
+          <Route path="/company-secret" element={<CompanySecret />} />
+          <Route path="/company-register" element={<CompanyRegister />} />
 
-        {/* User Routes */}
-        <Route path="/user/dashboard" element={<UserDashboard />} />
-        <Route path="/user/resume" element={<UserResume />} />
-        <Route path="/user/alerts" element={<JobAlerts />} />
-        <Route path="/user/saved-jobs" element={<SavedJobs />} />
-        <Route path="/user/account" element={<UserAccount />} />
-        <Route path="/user/upload-resume" element={<UploadResume />} />
+          {/* User Routes */}
+          <Route path="/user/dashboard" element={<UserDashboard />} />
+          <Route path="/user/resume" element={<UserResume />} />
+          <Route path="/user/alerts" element={<JobAlerts />} />
+          <Route path="/user/saved-jobs" element={<SavedJobs />} />
+          <Route path="/user/account" element={<UserAccount />} />
+          <Route path="/user/upload-resume" element={<UploadResume />} />
 
-        {/* Company Routes */}
-        <Route path="/company/dashboard" element={<CompanyDashboard />} />
-        <Route path="/company/jobs" element={<JobVacancies />} />
-        <Route path="/company/scans" element={<CompanyResumeScans />} />
-        <Route path="/company/emails" element={<CompanyEmailLogs />} />
-        <Route path="/company/preferences" element={<CompanyPreferences />} />
-        <Route path="/company/post-job" element={<PostJob />} />
+          {/* Company Routes */}
+          <Route path="/company/dashboard" element={<CompanyDashboard />} />
+          <Route path="/company/jobs" element={<JobVacancies />} />
+          <Route path="/company/scans" element={<CompanyResumeScans />} />
+          <Route path="/company/emails" element={<CompanyEmailLogs />} />
+          <Route path="/company/preferences" element={<CompanyPreferences />} />
+          <Route path="/company/post-job" element={<PostJob />} />
 
-        {/* Global Admin Route */}
-        <Route path="/admin/dashboard" element={<GlobalAdminDashboard />} />
+          {/* Global Admin Route */}
+          <Route path="/admin/dashboard" element={<GlobalAdminDashboard />} />
 
-        </Routes>
-      </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </ToastProvider>
     </div>
   );
 }

@@ -2,12 +2,36 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../services/api";
 import "./css/Login.css";
+import { useToast } from "../../context/ToastContext";
 
 function CompanyRegister() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [sendingOtp, setSendingOtp] = useState(false);
+
+  const sendOtp = async () => {
+    if (!email) {
+      toast.error("Please enter an email first to receive OTP.");
+      return;
+    }
+    setSendingOtp(true);
+    try {
+      await API.post("/auth/send-otp", { email });
+      toast.success("OTP sent! Please check your inbox.");
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.detail) {
+        toast.error("Failed: " + err.response.data.detail);
+      } else {
+        toast.error("Failed to send OTP.");
+      }
+    } finally {
+      setSendingOtp(false);
+    }
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -16,19 +40,20 @@ function CompanyRegister() {
         name,
         email,
         password,
-        role: "Company"
+        role: "Company",
+        otp
       });
 
       localStorage.setItem("user_name",  name);
       localStorage.setItem("user_email", email);
       localStorage.setItem("user_role",  "Company");
-      alert("Company Registration Successful. Please Sign In.");
+      toast.success("Company Registration Successful. Please Sign In.");
       navigate("/");
     } catch (err) {
       if (err.response && err.response.data && err.response.data.detail) {
-        alert("Registration Failed: " + err.response.data.detail);
+        toast.error("Registration Failed: " + err.response.data.detail);
       } else {
-        alert("Registration Failed.");
+        toast.error("Registration Failed.");
       }
     }
   };
@@ -71,14 +96,34 @@ function CompanyRegister() {
             />
           </div>
 
-          <div className="form-group-modern">
+          <div className="form-group-modern" style={{ display: 'flex', gap: '0.5rem' }}>
              <input
               className="form-input"
               placeholder="Corporate Email"
               type="email"
               required
-              style={{ padding: '0.75rem 1rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-sm)', fontWeight: '500' }}
+              style={{ flex: 1, padding: '0.75rem 1rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-sm)', fontWeight: '500' }}
               onChange={(e) => setEmail(e.target.value)}
+            />
+            <button 
+              type="button" 
+              onClick={sendOtp} 
+              disabled={sendingOtp}
+              style={{ padding: '0 1rem', background: 'rgba(5, 150, 105, 0.1)', color: '#059669', border: 'none', borderRadius: 'var(--radius-sm)', fontWeight: 600, cursor: 'pointer' }}
+            >
+              {sendingOtp ? "..." : "Get OTP"}
+            </button>
+          </div>
+
+          <div className="form-group-modern">
+            <input
+              className="form-input"
+              placeholder="Enter 6-Digit OTP"
+              type="text"
+              required
+              maxLength={6}
+              onChange={(e) => setOtp(e.target.value)}
+              style={{ padding: '0.75rem 1rem', border: '1px solid var(--border-color)', backgroundColor: 'var(--surface-color)', borderRadius: 'var(--radius-sm)', fontWeight: 'bold', letterSpacing: '2px', textAlign: 'center' }}
             />
           </div>
 

@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:8000"
+  // This allows the app to work over ngrok or local network without hardcoding localhost
+  baseURL: process.env.REACT_APP_API_URL || "" 
 });
 
 // Attach the logged-in user's email as a custom header on every request.

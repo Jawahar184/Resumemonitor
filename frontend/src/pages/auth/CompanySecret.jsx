@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/Login.css";
+import { useToast } from "../../context/ToastContext";
 
 function CompanySecret() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [secretKey, setSecretKey] = useState("");
 
   const handleVerify = (e) => {
@@ -11,7 +13,7 @@ function CompanySecret() {
     if(secretKey === "COMP123") {
       navigate("/company-register");
     } else {
-      alert("Invalid Company Secret Key");
+      toast.error("Invalid Company Secret Key");
     }
   };
 
